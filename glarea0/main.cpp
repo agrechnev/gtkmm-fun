@@ -9,7 +9,6 @@
 #include <vector>
 
 #include <gtkmm.h>
-#include <giomm/resource.h>
 #include <epoxy/gl.h>
 
 using std::cerr;
@@ -89,9 +88,11 @@ Example_GLArea::Example_GLArea() : m_RotationAngles(N_AXIS, 0.0f)
   m_GLArea.signal_unrealize().connect(sigc::mem_fun(*this, &Example_GLArea::unrealize), false);
   m_GLArea.signal_render().connect(sigc::mem_fun(*this, &Example_GLArea::render), false);
   
+  m_GLArea.show();
   
   m_VBox.add(m_Controls);
   m_Controls.set_hexpand(true);
+  m_Controls.show();
 
   for(int i = 0 ; i < N_AXIS ; ++i)
   {
@@ -103,7 +104,9 @@ Example_GLArea::Example_GLArea() : m_RotationAngles(N_AXIS, 0.0f)
   m_VBox.add(m_Button);
   // Connect clicked to close of window
   m_Button.signal_clicked().connect(sigc::mem_fun(*this, &Gtk::Window::close));
+  m_Button.show();
   
+  m_VBox.show();
   
   cerr << "CTor finished !" << endl; 
 }
@@ -265,16 +268,15 @@ static GLuint create_shader(int type, const char *src)
 
 void Example_GLArea::init_shaders()
 {
-  auto vshader_bytes = Gio::Resource::lookup_data_global("/glarea/glarea-vertex.glsl");
-  if(!vshader_bytes)
-  {
-    cerr << "Failed fetching vertex shader resource" << endl;
-    m_Program = 0;
-    return;
-  }
-  gsize vshader_size {vshader_bytes->get_size()};
-  auto vertex = create_shader(GL_VERTEX_SHADER,
-                         (const char*)vshader_bytes->get_data(vshader_size));
+  
+  const char * vShaderSrc = "#version 330\n"
+"layout(location = 0) in vec4 position;\n"
+"uniform mat4 mvp;\n"
+"void main() {\n"
+"  gl_Position = mvp * position;\n"
+"}\n\0";
+  
+  auto vertex = create_shader(GL_VERTEX_SHADER, vShaderSrc);
 
   if(vertex == 0)
   {
@@ -282,17 +284,14 @@ void Example_GLArea::init_shaders()
     return;
   }
 
-  auto fshader_bytes = Gio::Resource::lookup_data_global("/glarea/glarea-fragment.glsl");
-  if(!fshader_bytes)
-  {
-    cerr << "Failed fetching fragment shader resource" << endl;
-    glDeleteShader(vertex);
-    m_Program = 0;
-    return;
-  }
-  gsize fshader_size {fshader_bytes->get_size()};
-  auto fragment = create_shader(GL_FRAGMENT_SHADER,
-                           (const char*)fshader_bytes->get_data(fshader_size));
+  const char * fShaderSrc = "#version 330\n"
+"out vec4 outputColor;\n"
+"void main() {\n"
+"  float lerpVal = gl_FragCoord.y / 500.0f; \n"
+"  outputColor = mix(vec4(1.0f, 0.85f, 0.35f, 1.0f), vec4(0.2f, 0.2f, 0.2f, 1.0f), lerpVal);\n"
+"}\n\0";
+  
+  auto fragment = create_shader(GL_FRAGMENT_SHADER, fShaderSrc);
 
   if(fragment == 0)
   {
