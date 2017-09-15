@@ -68,6 +68,8 @@ Gtk::Window* do_glarea()
 
 Example_GLArea::Example_GLArea() : m_RotationAngles(N_AXIS, 0.0f)
 {
+  cerr << "CTor !" << endl;  
+    
   set_title("GL Area");
   set_default_size(400, 600);
 
@@ -86,7 +88,8 @@ Example_GLArea::Example_GLArea() : m_RotationAngles(N_AXIS, 0.0f)
   // GL resources _before_ the default unrealize handler is called (the "false")
   m_GLArea.signal_unrealize().connect(sigc::mem_fun(*this, &Example_GLArea::unrealize), false);
   m_GLArea.signal_render().connect(sigc::mem_fun(*this, &Example_GLArea::render), false);
-
+  
+  
   m_VBox.add(m_Controls);
   m_Controls.set_hexpand(true);
 
@@ -100,6 +103,9 @@ Example_GLArea::Example_GLArea() : m_RotationAngles(N_AXIS, 0.0f)
   m_VBox.add(m_Button);
   // Connect clicked to close of window
   m_Button.signal_clicked().connect(sigc::mem_fun(*this, &Gtk::Window::close));
+  
+  
+  cerr << "CTor finished !" << endl; 
 }
 
 Example_GLArea::~Example_GLArea()
@@ -114,6 +120,8 @@ void Example_GLArea::on_axis_value_change(int axis, const Glib::RefPtr<Gtk::Adju
 
 void Example_GLArea::realize()
 {
+  cerr << "Realize !" << endl;  
+    
   m_GLArea.make_current();
   try
   {
@@ -387,4 +395,14 @@ void Example_GLArea::draw_triangle()
   glDisableVertexAttribArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glUseProgram(0);
+}
+
+//----------
+int main(int argc, char** argv)
+{
+        auto app = Gtk::Application::create(argc, argv, "org.brianna.love");
+        
+        Example_GLArea hw;
+        
+        return app->run(hw);
 }
