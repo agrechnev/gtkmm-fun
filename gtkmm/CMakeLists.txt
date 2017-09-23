@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(gtkmm-hello)
+project(gtkmm-examples)
 
 set(CMAKE_CXX_STANDARD 14)
-
+file(COPY pics DESTINATION .)
 find_package(PkgConfig)
 
 pkg_check_modules(GTKMM gtkmm-3.0)
@@ -21,10 +21,5 @@ link_directories(
 include_directories(
    ${GTKMM_INCLUDE_DIRS}  )
 
-add_executable(${PROJECT_NAME}
-   HelloWorld.h
-   main.cpp
-   )
-
-target_link_libraries(${PROJECT_NAME}
-   ${GTKMM_LIBRARIES}  )
+add_subdirectory(hello)
+add_subdirectory(fun1)

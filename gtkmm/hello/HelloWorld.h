@@ -8,12 +8,13 @@
 class HelloWorld : public Gtk::Window {
 public:
     /// Ctor
-    HelloWorld() : mButton("Handmaiden's War !") {
+    HelloWorld() {
         set_border_width(10);
         set_title("Handmaiden's Love");
-        mButton.signal_clicked().connect(sigc::mem_fun(*this, &HelloWorld::onClick));
-        add(mButton);
-        mButton.show();
+
+        mButton1.signal_clicked().connect(sigc::mem_fun(*this, &HelloWorld::onClick1));
+        add(mButton1);
+        mButton1.show();
     }
     
     /// Dtor
@@ -21,9 +22,9 @@ public:
     
 protected:
 
-    void onClick() {
+    void onClick1() {
         std::cout << "Brianna The Handmaiden !!!" << std::endl;
     }
     
-    Gtk::Button mButton;
+    Gtk::Button mButton1{"Handmaiden's War !"};
 };
