@@ -24,3 +24,4 @@ include_directories(
 add_subdirectory(hello)
 add_subdirectory(fun1)
 add_subdirectory(funmat)
+add_subdirectory(funvideo)

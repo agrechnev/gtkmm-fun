@@ -12,13 +12,13 @@
 class Hello : public Gtk::Window {
 public:
     Hello() {
-//        cv::Mat m = cv::imread("elves.jpg");
+//        cv::Mat frame = cv::imread("elves.jpg");
         set_border_width(10);
         set_title("OpenCV + gtkmm elves");
-        cv::cvtColor(m , m , cv::COLOR_BGR2RGB);
+        cv::cvtColor(frame , frame , cv::COLOR_BGR2RGB);
         auto pb = Gdk::Pixbuf::create_from_data(
-                m.data, Gdk::COLORSPACE_RGB, m.channels() == 4, 8,
-                m.cols, m.rows, (int) m.step
+                frame.data, Gdk::COLORSPACE_RGB, frame.channels() == 4, 8,
+                frame.cols, frame.rows, (int) frame.step
         );
         img.set(pb);
         add(img);
@@ -26,6 +26,6 @@ public:
     }
 
 protected:
-    cv::Mat m = cv::imread("elves.jpg");
+    cv::Mat frame = cv::imread("elves.jpg");
     Gtk::Image img;
 };
