@@ -19,5 +19,5 @@ public:
 
 protected:
 //    Gtk::Image img{"elves.jpg"};
-    Gtk::Image img{Gdk::PixbufAnimation::create_from_file("elves.jpg")};
+    Gtk::Image img{Gdk::Pixbuf::create_from_file("elves.jpg")};
 };

@@ -15,7 +15,8 @@ public:
 //        cv::Mat frame = cv::imread("elves.jpg");
         set_border_width(10);
         set_title("OpenCV + gtkmm elves");
-        cv::cvtColor(frame , frame , cv::COLOR_BGR2RGB);
+//        cv::resize(frame, frame, cv::Size(), 3.0, 3.0, cv::INTER_LINEAR);
+        cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
         auto pb = Gdk::Pixbuf::create_from_data(
                 frame.data, Gdk::COLORSPACE_RGB, frame.channels() == 4, 8,
                 frame.cols, frame.rows, (int) frame.step
