@@ -21,8 +21,12 @@ link_directories(
 include_directories(
    ${GTKMM_INCLUDE_DIRS}  )
 
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )   
+
 add_subdirectory(hello)
 add_subdirectory(fun1)
 add_subdirectory(funmat)
 add_subdirectory(zoommat)
 add_subdirectory(funvideo)
+add_subdirectory(rubber)

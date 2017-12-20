@@ -4,10 +4,6 @@ project(funvideo)
 
 set(CMAKE_CXX_STANDARD 14)
 
-#OpenCV
-find_package( OpenCV REQUIRED )
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-
 # Threads
 find_package(Threads)
 

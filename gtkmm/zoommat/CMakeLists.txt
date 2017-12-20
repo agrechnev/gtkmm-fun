@@ -4,10 +4,7 @@ project(zoommat)
 
 set(CMAKE_CXX_STANDARD 14)
 
-file(COPY elves.jpg DESTINATION .)
-
-find_package( OpenCV REQUIRED )
-include_directories( ${OpenCV_INCLUDE_DIRS} )
+file(COPY ../pics/elves.jpg DESTINATION .)
 
 add_executable(${PROJECT_NAME}
    #HelloWorld.h
