@@ -10,6 +10,7 @@
 
 //=====================================
 void ZoomedMat::rescale() {
+	isRubber = false;
     if (1.0==scale)
         scaledImg0 = origImg.clone();  // No scaling
     else if (scale < 1.0)
