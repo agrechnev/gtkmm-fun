@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <opencv2/opencv.hpp>
 
@@ -6,11 +7,24 @@
 
 ImgPanel::ImgPanel(){
     using namespace std;
+    using namespace cv;
     zFrame.fromFile("elves.jpg");
     zFrame.setScale(2.5);
 
+    cv::Mat m = zFrame.getOrigImg();
+    cout << "w = " << m.cols << endl;
+    cout << "h = " << m.rows << endl;
+
+    // Let's create some regions on the image !
+    vector<Rect> rects{
+        Rect(Point(100,30), Point(142, 83)),
+        Rect(Point(146,20), Point(185, 65))
+    };
+    zFrame.setRegions(rects);
+
     img.set(zFrame.createPixbuf());
     img.queue_draw();
+
 
     //    cout << "has_window() = " << get_has_window() << endl;
 
@@ -48,11 +62,11 @@ ImgPanel::ImgPanel(){
             img.set(zFrame.createPixbuf());
             // Get subimage defined by the rubber
             cv::Mat m = zFrame.getSubImage();
-            if (m.data) {
-                // Not very good within gtkmm, but a quick solution
-                cv::imshow("subImage", m);
-                cv::waitKey(0);
-            }
+            //            if (m.data) {
+            //                // Not very good within gtkmm, but a quick solution
+            //                cv::imshow("subImage", m);
+            //                cv::waitKey(0);
+            //            }
         } else { // A click with no drag removes the rubber
             zFrame.removeRubber();  // Remove any rubber
             img.set(zFrame.createPixbuf());
@@ -61,5 +75,6 @@ ImgPanel::ImgPanel(){
     });
 
     add(img);
+
     show_all_children();
 }

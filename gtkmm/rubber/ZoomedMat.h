@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include <opencv2/core.hpp>
 #include <gdkmm/window.h>
 
@@ -15,7 +17,7 @@ public: //=========== Methods ================
     /// Generate scaledImg using current scale
     void rescale();
 
-    /// Get a Pixbuf  from scaledImg (not valid after each rescale !)
+    /// Get a Pixbuf  from scaledImg (not valid after each rescale !), with rubber etc.
     Glib::RefPtr<Gdk::Pixbuf> createPixbuf();
 
     /// Load origImg from file
@@ -57,6 +59,21 @@ public: //=========== Methods ================
         return isRubber;
     }
 
+    const std::vector<cv::Rect> & getRegions() const
+    {
+        return regions;
+    }
+
+    /// Set regions, creates scaled versions as well
+    void setRegions(const std::vector<cv::Rect> &regions);
+
+private:  //========== Methods ===============
+    /// Create scaledImg from scaledImg0 with the rubber band and regions
+    void drawRects();
+
+    /// Check that the point is in the boundaries of an image
+    static cv::Point checkEdges(const cv::Point & p, const cv::Mat & m);
+
 private:  //========== Fields ================
     /// The original image (in BGR)
     cv::Mat origImg;
@@ -75,6 +92,12 @@ private:  //========== Fields ================
 
     /// Rubber band two corners
     cv::Point p1, p2;
+
+    /// Selected regions, orig image
+    std::vector <cv::Rect> regions;
+
+    /// Selected regions, scaled to the size of scaledImg
+    std::vector <cv::Rect> regionsScaled;
 };
 
 
