@@ -5,35 +5,32 @@
 #pragma once
 
 #include <iostream>
-#include <gtkmm/radiobutton.h>
+#include <gtkmm/image.h>
+#include <gtkmm/fixed.h>
+#include <gtkmm/alignment.h>
 #include <gtkmm/window.h>
-#include <gtkmm/box.h>
-#include <gtkmm/separator.h>
+#include <gtkmm/eventbox.h>
 
 class Hello : public Gtk::Window {
 public:
     Hello() {
         set_border_width(10);
         set_title("Handmaiden's Love !!!");
-
-        rb2.join_group(rb1);
-        rb3.join_group(rb1);
-        box1.pack_start(rb1);
-        box1.pack_start(rb2);
-        box1.pack_start(rb3);
-        add(box1);
-
+        e.add(image);
+        e.signal_button_press_event().connect([this](GdkEventButton* ev)->bool{
+            int x,y;
+            image.get_pointer(x, y);
+            std::cout << "x = " << x << " y = " << y << std::endl;
+            return false;
+        });
+        f.add(e);
+        add(f);
         show_all_children();
     }
 
 protected:
-    Gtk::RadioButton rb1{"Nel"};
-    Gtk::RadioButton rb2{"Maria"};
-    Gtk::RadioButton rb3{"Sophia"};
-
-    Gtk::Button buClose{"Close"};
-
-    Gtk::Box box0{Gtk::ORIENTATION_VERTICAL};
-    Gtk::Box box1{Gtk::ORIENTATION_VERTICAL, 10};
-    Gtk::Box box2{Gtk::ORIENTATION_VERTICAL, 10};
+//    Gtk::Fixed f;
+    Gtk::Alignment f{0.5, 0.5, 0.0, 0.0};
+    Gtk::EventBox e;
+    Gtk::Image image{"elves.jpg"};
 };

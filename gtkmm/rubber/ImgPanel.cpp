@@ -5,7 +5,7 @@
 
 #include "ImgPanel.h"
 
-ImgPanel::ImgPanel(){
+ImgPanel::ImgPanel() : Gtk::Alignment(0.5, 0.5, 0.0, 0.0)  {
     using namespace std;
     using namespace cv;
     zFrame.fromFile("elves.jpg");
@@ -21,15 +21,12 @@ ImgPanel::ImgPanel(){
         Rect(Point(146,20), Point(185, 65))
     };
     zFrame.setRegions(rects);
-
     img.set(zFrame.createPixbuf());
     img.queue_draw();
-
-
     //    cout << "has_window() = " << get_has_window() << endl;
 
     //    set_events(Gdk::ALL_EVENTS_MASK);
-    signal_button_press_event().connect([this](GdkEventButton* e)->bool{
+    eBox.signal_button_press_event().connect([this](GdkEventButton* e)->bool{
         if (e->button != 1)  // Only lelf button
             return false;
         isPressed = true;
@@ -39,7 +36,7 @@ ImgPanel::ImgPanel(){
         return true;  // No more propagation !
     });
 
-    signal_motion_notify_event().connect([this](GdkEventMotion* e)->bool{
+    eBox.signal_motion_notify_event().connect([this](GdkEventMotion* e)->bool{
         if (!isPressed)
             return false;  // Do nothing
         int x2,y2;
@@ -51,7 +48,7 @@ ImgPanel::ImgPanel(){
         return true;
     });
 
-    signal_button_release_event().connect([this](GdkEventButton* e)->bool{
+    eBox.signal_button_release_event().connect([this](GdkEventButton* e)->bool{
         if (e->button != 1)  // Only lelf button
             return false;
         isPressed = false;
@@ -73,8 +70,8 @@ ImgPanel::ImgPanel(){
         }
         return true;  // No more propagation !
     });
-
-    add(img);
+    eBox.add(img);
+    add(eBox);
 
     show_all_children();
 }

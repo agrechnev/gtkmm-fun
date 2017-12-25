@@ -2,15 +2,17 @@
 // By Oleksiy Grechnyev
 #include <gtkmm/eventbox.h>
 #include <gtkmm/image.h>
+#include <gtkmm/alignment.h>
 
 #include "./ZoomedMat.h"
 
-class ImgPanel : public Gtk::EventBox{
+class ImgPanel : public Gtk::Alignment{
 public:
     ImgPanel();
 
 private: // ==== fields
     ZoomedMat zFrame;
+    Gtk::EventBox eBox;
     Gtk::Image img;
 
     // Coordinates for drawing the rubber band
