@@ -8,9 +8,9 @@ set(CMAKE_CXX_STANDARD 14)
 file(COPY ../pics/elves.jpg DESTINATION .)
 
 add_executable(${PROJECT_NAME}
-   #HelloWorld.h
    main.cpp
-        Hello.h)
+   Hello.h Hello.cpp
+)
 
 target_link_libraries(${PROJECT_NAME}
    ${GTKMM_LIBRARIES}  )

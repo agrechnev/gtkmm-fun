@@ -5,32 +5,34 @@
 #pragma once
 
 #include <iostream>
-#include <gtkmm/image.h>
-#include <gtkmm/fixed.h>
-#include <gtkmm/alignment.h>
+#include <gtkmm/box.h>
+#include <gtkmm/adjustment.h>
+#include <gtkmm/scrollbar.h>
+#include <gtkmm/scale.h>
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/window.h>
-#include <gtkmm/eventbox.h>
 
 class Hello : public Gtk::Window {
 public:
-    Hello() {
-        set_border_width(10);
-        set_title("Handmaiden's Love !!!");
-        e.add(image);
-        e.signal_button_press_event().connect([this](GdkEventButton* ev)->bool{
-            int x,y;
-            image.get_pointer(x, y);
-            std::cout << "x = " << x << " y = " << y << std::endl;
-            return false;
-        });
-        f.add(e);
-        add(f);
-        show_all_children();
-    }
+    Hello();
 
 protected:
-//    Gtk::Fixed f;
-    Gtk::Alignment f{0.5, 0.5, 0.0, 0.0};
-    Gtk::EventBox e;
-    Gtk::Image image{"elves.jpg"};
+// Adjustments
+    Glib::RefPtr<Gtk::Adjustment> adjMain = Gtk::Adjustment::create(0., 0., 101., 0.1, 1.0, 1.0);
+
+// Layout
+// Major boxes
+    Gtk::Box boxV2{Gtk::ORIENTATION_VERTICAL, 10};
+
+//  Scales: upper panel
+    Gtk::Box boxHScales{Gtk::ORIENTATION_HORIZONTAL, 10};
+    Gtk::Box boxVHScale{Gtk::ORIENTATION_VERTICAL, 10};
+    Gtk::Scale scaleV{adjMain, Gtk::ORIENTATION_VERTICAL};
+    Gtk::Scale scaleH{adjMain, Gtk::ORIENTATION_HORIZONTAL};
+    Gtk::Scrollbar scroll{adjMain};
+// Check button
+    Gtk::CheckButton chbu{"Display value on scale widgets", 0};
+// Combo
+    Gtk::Box boxHCombo{Gtk::ORIENTATION_HORIZONTAL, 10};
+
 };
