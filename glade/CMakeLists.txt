@@ -21,3 +21,4 @@ include_directories(
    ${GTKMM_INCLUDE_DIRS}  )
 
 add_subdirectory(fun1)
+add_subdirectory(fun2)

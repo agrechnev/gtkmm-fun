@@ -4,6 +4,8 @@
 #include <gtkmm/button.h>
 #include <iostream>
 
+/// This is the minimal gtkmm+glade example
+
 int main(int argc, char **argv){
     auto app = Gtk::Application::create(argc, argv);
     // Load layout via builder and create objects
