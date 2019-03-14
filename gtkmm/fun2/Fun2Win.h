@@ -14,7 +14,7 @@ public:
 
 protected:
     Gtk::Box boxV{Gtk::ORIENTATION_VERTICAL};
-    Gtk::Entry ent;
+    Gtk::ComboBoxText cbt;
     Gtk::Button btnClose{"Close"};
 
 };

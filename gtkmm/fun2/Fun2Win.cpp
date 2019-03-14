@@ -7,24 +7,29 @@
 #include "Fun2Win.h"
 
 Fun2Win::Fun2Win() {
+    using namespace std;
     set_title("FUN : Gtk::Entry");
 //    set_border_width(5);
-//    set_default_size(400, 100);
-    set_size_request(400, 100);
+    set_default_size(400, 100);
+//    set_size_request(400, 100);
 
     // GUI
     add(boxV);
 
-    // Entry
-    ent.set_max_length(40);
-    ent.set_text("Goblins WON !!!");
-    boxV.pack_start(ent, Gtk::PACK_SHRINK);
+    // Combo box
+    cbt.append("Orc");
+    cbt.append("Goblin");
+    cbt.remove_all();
 
-    ent.set_icon_from_icon_name("edit-find");
-    ent.signal_icon_press().connect([this](Gtk::EntryIconPosition /* icon_pos */,
-                                    const GdkEventButton* /* event */)->void{
-        std::cout << "Icon pressed !!!" << std::endl;
+    cbt.append("Jessica");
+    cbt.append("Mira");
+    cbt.append("Brianna");
+    cbt.append("Lilith");
+    cbt.set_active(1);
+    cbt.signal_changed().connect([this]()->void{
+        cout << "CHANGED :" << cbt.get_active_row_number() << endl;
     });
+    boxV.pack_start(cbt, Gtk::PACK_SHRINK);
 
     // Close
     boxV.pack_start(btnClose);

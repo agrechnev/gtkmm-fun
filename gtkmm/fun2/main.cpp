@@ -4,7 +4,7 @@
 #include "Fun2Win.h"
 
 int main(int argc, char **argv){
-    auto app = Gtk::Application::create(argc, argv, "org.brianna.love");
+    auto app = Gtk::Application::create(argc, argv);
 
     Fun2Win hw;
 
